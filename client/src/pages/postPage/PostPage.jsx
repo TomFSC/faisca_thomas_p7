@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import colors from "../../utils/style/colors";
@@ -15,6 +16,7 @@ import {
   Button,
 } from "../../components/postform/PostForm";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -25,6 +27,17 @@ const Title = styled.h2`
   margin: 50px 0 50px;
   color: ${colors.tertiary};
   text-shadow: 8px 8px 20px ${colors.tertiary};
+`;
+
+const ReturnIcon = styled(Link)`
+  display: flex;
+  column-gap: 25px;
+  font-size: 25px;
+  color: ${colors.tertiary};
+  margin: 25px 0 0 25px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function PostPage() {
@@ -62,7 +75,9 @@ export default function PostPage() {
       `${process.env.REACT_APP_API_URL}/api/posts/${id}`,
       formData,
       {
-        headers: { Authorization: user.token },
+        headers: {
+          Authorization: user.token,
+        },
       }
     );
     navigate("/");
@@ -70,6 +85,10 @@ export default function PostPage() {
 
   return (
     <FormWrapper>
+      <ReturnIcon to="/">
+        <BackspaceIcon style={{ scale: "2" }} />
+        Retour
+      </ReturnIcon>
       <Title>Modifiez votre Post :</Title>
       <PostFormContainer onSubmit={handleUpdate}>
         {newFile && (
@@ -79,7 +98,6 @@ export default function PostPage() {
               id="cancel_new-file"
               onClick={() => {
                 setNewFile(null);
-                setFile(false);
               }}
             />
           </PostFormImgContainer>

@@ -12,3 +12,8 @@ export const loginCall = async (userCredential, dispatch) => {
     dispatch({ type: "LOGIN_FAILURE", payload: error });
   }
 };
+
+export const logoutCall = (dispatch) => {
+  localStorage.clear();
+  dispatch({ type: "LOGOUT" });
+};

@@ -1,12 +1,12 @@
 //-----------Modules import---------
 const express = require("express");
 const router = express.Router();
-const usersCtrl = require("../controllers/usersCtrl");
+const authCtrl = require("../controllers/authCtrl");
 
 //Route for users registration
-router.post("/register", usersCtrl.signup);
+router.post("/register", authCtrl.signup);
 
 //Route for users login
-router.post("/login", usersCtrl.login);
+router.post("/login", authCtrl.login);
 
 module.exports = router;

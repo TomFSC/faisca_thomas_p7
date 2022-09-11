@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
+import defaultProfileImg from "../../utils/images/noAvatar.png";
 import groupomaniaLogo from "../../utils/images/logo.png";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { logoutCall } from "../../context/apiCalls";
 
 const TopBarContainer = styled.div`
   display: flex;
@@ -32,31 +33,12 @@ const Logo = styled.img`
   height: 100%;
 `;
 
-const LinksContainer = styled.div`
-  display: flex;
-  height: 100%;
-  width: 250px;
-  align-items: center;
-  justify-content: space-between;
-  margin-right: 20px;
-`;
-
-const PagesLink = styled(Link)`
-  font-weight: bold;
-  color: ${colors.tertiary};
-  padding-bottom: 15px;
-  margin-bottom: -15px;
-  &:hover {
-    border-bottom: 2px solid ${colors.tertiary};
-  }
-`;
-
 const LogoutContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   height: 100%;
-  width: 100px;
+  max-width: 400px;
   margin-right: 20px;
 `;
 
@@ -69,13 +51,30 @@ const Logout = styled(LogoutIcon)`
   }
 `;
 
-export default function TopBar() {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-width: 150px;
+  max-width: 300px;
+  font-size: 20px;
+  color: ${colors.primary};
+`;
 
-  const handleLogout = () => {
-    localStorage.setItem("user", null);
-    window.location.reload();
+const ProfileImg = styled.img`
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+  box-shadow: 2px 2px 10px ${colors.tertiary};
+`;
+
+export default function TopBar() {
+  const { user, dispatch } = useContext(AuthContext);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logoutCall(dispatch);
   };
 
   return (
@@ -83,15 +82,16 @@ export default function TopBar() {
       <LogoContainer>
         <Logo src={groupomaniaLogo} alt="groupomania_logo" />
       </LogoContainer>
-      {!user ? (
-        <LinksContainer>
-          <PagesLink to="/login">SE CONNECTER</PagesLink>
-          <PagesLink to="/register">S'ENREGISTER</PagesLink>
-        </LinksContainer>
-      ) : (
-        <LogoutContainer>
-          <Logout onClick={() => handleLogout} />
-        </LogoutContainer>
+      {user && (
+        <>
+          <LogoutContainer>
+            <UserInfo>
+              <ProfileImg src={defaultProfileImg} alt="profile_image" />
+              {user.currentUser.username}
+            </UserInfo>
+            <Logout onClick={handleLogout} />
+          </LogoutContainer>
+        </>
       )}
     </TopBarContainer>
   );

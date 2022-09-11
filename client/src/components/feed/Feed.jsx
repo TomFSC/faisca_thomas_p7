@@ -14,7 +14,7 @@ const FeedWrapper = styled.div`
   padding: 20px;
 `;
 
-const AddPost = styled.h2`
+const Title = styled.h2`
   text-align: center;
   margin-top: 25px;
   font-style: italic;
@@ -40,12 +40,12 @@ export default function Feed() {
         });
     };
     getPosts();
-  }, [user.token]);
+  }, [posts, user.token]);
   return (
     <FeedContainer>
-      <AddPost>Ajouter un Post :</AddPost>
-
+      <Title>Ajouter un Post :</Title>
       <PostForm />
+      <Title>Dernières publications</Title>
       <FeedWrapper>
         {posts.map((post) => (
           <Post key={post._id} post={post} />

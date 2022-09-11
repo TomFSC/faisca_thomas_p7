@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import "../../utils/date/localeDate";
 import axios from "axios";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
@@ -18,9 +20,10 @@ const PostContainer = styled.div`
   justify-content: center;
   min-width: 300px;
   width: 500px;
-  min-height: 200px;
+  min-height: 150px;
   max-height: 400px;
   margin: 0 auto 50px;
+  padding: 15px;
   background-color: ${colors.secondary};
   border-radius: 15% 15%;
   box-shadow: 5px 5px 20px ${colors.primary};
@@ -30,7 +33,7 @@ const PostContainer = styled.div`
 const PostImgContainer = styled.div`
   display: flex;
   max-width: 90%;
-  max-height: 300px;
+  height: 300px;
   margin-top: 15px;
   overflow: hidden;
   border-radius: 35px;
@@ -167,7 +170,6 @@ const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
   //Delete a Posts
 
   const cancelDelete = () => {
@@ -231,7 +233,10 @@ const Post = ({ post }) => {
             <ValidButton onClick={cancelDelete}>ANNULER</ValidButton>
           </ConfirmContainer>
         )}
-
+        <PostText>
+          Publié il y a {moment(`${post.updatedAt}`).locale("fr").fromNow(true)}{" "}
+          par {post.username}
+        </PostText>
         {post.image && (
           <PostImgContainer key="postImage">
             <PostImg src={post.image} alt="" />
@@ -241,7 +246,7 @@ const Post = ({ post }) => {
         <PostMessageContainer key="postMessage">
           {post.message}
         </PostMessageContainer>
-        <PostText>Ajouté le :</PostText>
+
         <PostInfosContainer key="postInfos">
           <LikesContainer>
             <LikePost color={isLiked ? "success" : ""} onClick={handleLike} />

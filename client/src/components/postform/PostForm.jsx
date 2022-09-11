@@ -98,10 +98,11 @@ export default function PostForm() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const userId = user.currentUser.userId;
+    const { userId, username } = user.currentUser;
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const formData = new FormData();
     formData.append("userId", userId);
+    formData.append("username", username);
     formData.append("image", file);
     formData.append("message", message);
 

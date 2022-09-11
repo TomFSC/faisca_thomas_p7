@@ -25,6 +25,7 @@ app.use(express.json());
 //Auth Route
 const authRoute = require("./routes/auth");
 app.use("/api/auth", authRoute);
+//Posts route
 const postsRoute = require("./routes/posts");
 app.use("/api/posts", postsRoute);
 //Static files route /images

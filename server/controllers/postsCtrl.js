@@ -1,18 +1,18 @@
 //-----------Modules import---------
 const Post = require("../models/Post");
-const User = require("../models/User");
 const fs = require("fs");
 
 //Create post OK
 
 exports.addPost = async (req, res) => {
-  const { userId, message } = req.body;
+  const { userId, message, username } = req.body;
   const imageURL = req.file
     ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     : "";
 
   await Post.create({
     userId: userId,
+    username: username,
     message: message,
     image: imageURL,
   })
@@ -27,7 +27,7 @@ exports.addPost = async (req, res) => {
 //Get all posts OK
 
 exports.getPosts = async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find({}).sort({ updatedAt: "desc" }).exec();
   res.status(200).json(posts);
 };
 
@@ -43,7 +43,7 @@ exports.getPost = async (req, res) => {
 //Update post OK
 
 exports.updatePost = async (req, res) => {
-  const { message, lastImage } = req.body;
+  const { message } = req.body;
   // Check if File in request
   const postObject = req.file
     ? {
