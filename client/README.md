@@ -4,6 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+Create a .env file with:
+REACT_APP_API_URL: `your server base url`
 In the project directory, you can run:
 
 ### `npm start`

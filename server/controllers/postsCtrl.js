@@ -61,7 +61,7 @@ exports.updatePost = async (req, res) => {
       .then((post) => {
         //Delete image from images folder
         const filename = post.image.split("/images/")[1];
-        fs.unlink(`images${filename}`, () => {
+        fs.unlink(`images/${filename}`, () => {
           //Update Database with new image
           Post.updateOne(
             { _id: req.params.id },

@@ -21,7 +21,6 @@ const PostContainer = styled.div`
   min-width: 300px;
   width: 500px;
   min-height: 150px;
-  max-height: 400px;
   margin: 0 auto 50px;
   padding: 15px;
   background-color: ${colors.secondary};

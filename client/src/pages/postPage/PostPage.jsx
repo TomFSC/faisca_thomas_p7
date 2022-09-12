@@ -1,7 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 import colors from "../../utils/style/colors";
 import {
   FormWrapper,
@@ -18,7 +20,6 @@ import {
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
 
 const Title = styled.h2`
   display: flex;
@@ -31,12 +32,14 @@ const Title = styled.h2`
 
 const ReturnIcon = styled(Link)`
   display: flex;
+  align-items: center;
   column-gap: 25px;
   font-size: 25px;
   color: ${colors.tertiary};
   margin: 25px 0 0 25px;
   &:hover {
     cursor: pointer;
+    color: ${colors.primary};
   }
 `;
 
