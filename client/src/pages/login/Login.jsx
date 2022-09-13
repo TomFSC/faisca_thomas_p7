@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
 
-//Styled Component
+//Styled components
 const LoginContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -100,10 +100,12 @@ const RegisterLink = styled(Link)`
   text-decoration: none;
 `;
 
+//Function
 function Login() {
+  //Ref login form
   const email = useRef();
   const password = useRef();
-
+  //Use user context
   const { isFetching, dispatch } = useContext(AuthContext);
 
   //Submit Login Form

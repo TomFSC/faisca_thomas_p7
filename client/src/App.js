@@ -13,6 +13,7 @@ import ErrorPage from "./pages/errorPage/ErrorPage";
 import PostPage from "./pages/postPage/PostPage";
 
 function App() {
+  //Use user context for protected routes
   const { user } = useContext(AuthContext);
   return (
     <Router>

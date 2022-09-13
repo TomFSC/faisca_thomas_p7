@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//Login call
 export const loginCall = async (userCredential, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   try {
@@ -13,6 +14,7 @@ export const loginCall = async (userCredential, dispatch) => {
   }
 };
 
+//Logout call
 export const logoutCall = (dispatch) => {
   localStorage.clear();
   dispatch({ type: "LOGOUT" });

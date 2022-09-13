@@ -4,6 +4,7 @@ import styled from "styled-components";
 import colors from "../../utils/style/colors";
 import errorLogo from "../../utils/images/logo_error_page.jpg";
 
+//Styled components
 const ErrorImg = styled.img`
   display: flex;
   max-height: 500px;
@@ -31,10 +32,11 @@ const HomeLink = styled(Link)`
   }
 `;
 
+//Function
 const ErrorPage = () => {
   return (
     <>
-      <ErrorImg src={errorLogo} alt="" />
+      <ErrorImg src={errorLogo} alt="error_image" />
       <Title>Désolé, cette page n'existe pas !</Title>
       <ReturnHome>
         Retourner vers la

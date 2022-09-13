@@ -38,7 +38,7 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  //Chack required informations
+  //Check required informations
   if (!email || !password) {
     res.status(400).json("Informations manquantes !");
   } else {
@@ -56,11 +56,13 @@ exports.login = async (req, res) => {
               .status(401)
               .json("Mauvaise combinaison Email/Mot de passe !");
           } else {
+            //Create current user infos to send
             let currentUser = {
               userId: user._id,
               username: user.username,
               isAdmin: user.isAdmin,
             };
+            //Send current user and create token
             res.status(200).json({
               currentUser,
               token: jwt.sign(

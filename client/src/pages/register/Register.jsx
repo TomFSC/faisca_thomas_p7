@@ -5,7 +5,7 @@ import styled from "styled-components";
 import colors from "../../utils/style/colors";
 import logo from "../../utils/images/logo.png";
 
-//Styled Component
+//Styled Components
 const RegisterContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -92,6 +92,7 @@ const Button = styled.button`
   font-size: large;
 `;
 
+//Function
 function Register() {
   //Navigation
   const navigate = useNavigate();
@@ -100,6 +101,7 @@ function Register() {
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
+  //Error state
   const [errorFormMsg, setErrorFormMsg] = useState("");
 
   //Submit Register Form

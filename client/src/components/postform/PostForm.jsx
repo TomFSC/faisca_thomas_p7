@@ -6,6 +6,7 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import CancelIcon from "@mui/icons-material/Cancel";
 import axios from "axios";
 
+//Styled components exported for postPage
 export const FormWrapper = styled.div`
   padding: 10px;
 `;
@@ -89,13 +90,23 @@ export const Button = styled.button`
   border-radius: 25px;
   box-shadow: ${colors.tertiary} 2px 2px 5px;
   font-size: large;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 8px ${colors.tertiary};
+    background-color: ${colors.primary};
+    color: white;
+  }
 `;
 
+//Function
 export default function PostForm() {
+  //Use user context
   const { user } = useContext(AuthContext);
+  //States
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
 
+  //Create post
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const { userId, username } = user.currentUser;
@@ -133,7 +144,7 @@ export default function PostForm() {
             onChange={(e) => setFile(e.target.files[0])}
           />
         </Label>
-        <Label htmlFor="">Message :</Label>
+        <Label>Message :</Label>
         <TextArea
           name="message"
           value={message}

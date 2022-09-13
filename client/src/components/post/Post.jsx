@@ -20,7 +20,7 @@ const PostContainer = styled.div`
   justify-content: center;
   min-width: 300px;
   width: 500px;
-  min-height: 150px;
+  min-height: 180px;
   margin: 0 auto 50px;
   padding: 15px;
   background-color: ${colors.secondary};
@@ -161,20 +161,24 @@ const ErrorMsg = styled.p`
   margin: 0 25px;
 `;
 
-const Post = ({ post }) => {
+//Function
+const Post = ({ post, setPost }) => {
+  //Use user context
   const { user } = useContext(AuthContext);
+  //Navigation
   const navigate = useNavigate();
   //States
   const [confirmBox, setConfirmBox] = useState(false);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  //Delete a Posts
 
+  //Cancel delete
   const cancelDelete = () => {
     setConfirmBox(false);
   };
 
+  //Delete a Posts
   const deletePost = async () => {
     try {
       await axios.delete(
@@ -187,14 +191,16 @@ const Post = ({ post }) => {
         }
       );
 
-      alert("Post deleted");
       setConfirmBox(false);
-      window.location.reload();
+      // window.location.reload();
+      setPost();
+      setErrorMsg("");
     } catch (error) {
-      setErrorMsg(error.response.data);
+      setErrorMsg("Vous n'êtes pas autorisé à supprimé ce post !");
     }
   };
 
+  //Like a post
   useEffect(() => {
     setIsLiked(post.likes.includes(user.currentUser.userId));
   }, [post.likes, user]);
@@ -238,7 +244,7 @@ const Post = ({ post }) => {
         </PostText>
         {post.image && (
           <PostImgContainer key="postImage">
-            <PostImg src={post.image} alt="" />
+            <PostImg src={post.image} alt="image from post" />
           </PostImgContainer>
         )}
 
@@ -249,7 +255,6 @@ const Post = ({ post }) => {
         <PostInfosContainer key="postInfos">
           <LikesContainer>
             <LikePost color={isLiked ? "success" : ""} onClick={handleLike} />
-
             {like}
             <PostText style={{ marginLeft: "5px" }}>
               {like <= 1 ? "Like" : "Likes"}

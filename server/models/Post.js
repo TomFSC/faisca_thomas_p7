@@ -1,3 +1,4 @@
+//-----------Modules import---------
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema(
@@ -16,7 +17,7 @@ const PostSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: "",
+      default: null,
     },
     likes: {
       type: Array,

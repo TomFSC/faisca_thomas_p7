@@ -7,6 +7,7 @@ import groupomaniaLogo from "../../utils/images/logo.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logoutCall } from "../../context/apiCalls";
 
+//Styled components
 const TopBarContainer = styled.div`
   display: flex;
   width: 100%;
@@ -69,9 +70,12 @@ const ProfileImg = styled.img`
   box-shadow: 2px 2px 10px ${colors.tertiary};
 `;
 
+//Function
 export default function TopBar() {
+  //Use user context
   const { user, dispatch } = useContext(AuthContext);
 
+  //Logout
   const handleLogout = (e) => {
     e.preventDefault();
     logoutCall(dispatch);

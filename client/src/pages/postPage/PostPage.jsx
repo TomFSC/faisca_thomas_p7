@@ -12,7 +12,6 @@ import {
   FileInput,
   PostFormImgContainer,
   PostFileImg,
-  CancelImg,
   StyledHr,
   TextArea,
   Button,
@@ -21,6 +20,7 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { useNavigate, useParams } from "react-router-dom";
 
+//Styled components
 const Title = styled.h2`
   display: flex;
   width: 100%;
@@ -43,15 +43,20 @@ const ReturnIcon = styled(Link)`
   }
 `;
 
+//Function
 export default function PostPage() {
+  //Navigation
   const navigate = useNavigate();
+  //Params & user context
   const { id } = useParams();
   const { user } = useContext(AuthContext);
+  //States
   const [message, setMessage] = useState("");
-  const [file, setFile] = useState();
-  const [newFile, setNewFile] = useState("");
+  const [postFile, setPostFile] = useState("");
+  const [file, setFile] = useState("");
   const [post, setPost] = useState({});
 
+  //Get a post
   useEffect(() => {
     const getPost = async () => {
       const res = await axios.get(
@@ -61,13 +66,15 @@ export default function PostPage() {
         }
       );
       setPost(res.data);
-      setFile(res.data.image);
+      setPostFile(res.data.image);
       setMessage(res.data.message);
     };
     getPost();
-  }, [id, user]);
+  }, [id, user, post]);
 
+  //Update post
   const handleUpdate = async (e) => {
+    const newFile = file ? file : "";
     e.preventDefault();
     const formData = new FormData();
     formData.append("userId", user.currentUser.userId);
@@ -94,23 +101,15 @@ export default function PostPage() {
       </ReturnIcon>
       <Title>Modifiez votre Post :</Title>
       <PostFormContainer onSubmit={handleUpdate}>
-        {newFile && (
+        {file && (
           <PostFormImgContainer>
-            <PostFileImg src={URL.createObjectURL(newFile)} alt="post_image" />
-            <CancelImg
-              id="cancel_new-file"
-              onClick={() => {
-                setNewFile(null);
-              }}
-            />
+            <PostFileImg src={URL.createObjectURL(file)} alt="post_image" />
           </PostFormImgContainer>
         )}
         <StyledHr />
-
-        {file && !newFile ? (
+        {postFile ? (
           <PostFormImgContainer>
-            <PostFileImg src={file} />
-            <CancelImg id="cancel_file" onClick={() => setFile(false)} />
+            <PostFileImg src={postFile} />
           </PostFormImgContainer>
         ) : (
           ""
@@ -122,7 +121,7 @@ export default function PostPage() {
             type="file"
             id="file"
             accept=".png,.jpg,.jpeg"
-            onChange={(e) => setNewFile(e.target.files[0])}
+            onChange={(e) => setFile(e.target.files[0])}
           />
         </Label>
         <Label htmlFor="message">Modifier message :</Label>

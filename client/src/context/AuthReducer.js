@@ -1,3 +1,5 @@
+//Auth reducer
+
 const AuthReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_START":

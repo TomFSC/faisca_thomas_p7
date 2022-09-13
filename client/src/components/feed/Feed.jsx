@@ -6,6 +6,7 @@ import Post from "../post/Post";
 import colors from "../../utils/style/colors";
 import { AuthContext } from "../../context/AuthContext";
 
+//Styled components
 const FeedContainer = styled.div`
   flex: 5.5;
 `;
@@ -23,7 +24,9 @@ const Title = styled.h2`
   text-shadow: 5px 5px 15px ${colors.tertiary};
 `;
 
+//Function
 export default function Feed() {
+  //Use user context
   const { user } = useContext(AuthContext);
 
   const [posts, setPosts] = useState([]);
