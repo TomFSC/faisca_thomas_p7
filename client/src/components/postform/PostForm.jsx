@@ -122,6 +122,7 @@ export default function PostForm() {
     });
     setMessage("");
     setFile(null);
+    window.location.reload();
   };
 
   return (

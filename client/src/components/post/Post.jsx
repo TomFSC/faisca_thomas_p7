@@ -192,7 +192,7 @@ const Post = ({ post, setPost }) => {
       );
 
       setConfirmBox(false);
-      // window.location.reload();
+      window.location.reload();
       setPost();
       setErrorMsg("");
     } catch (error) {

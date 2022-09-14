@@ -1,9 +1,13 @@
 //-----------Modules import---------
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 const path = require("path");
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+//Using express in app
+const app = express();
 
 //MongoDB connection
 mongoose
@@ -14,11 +18,17 @@ mongoose
   .then(() => console.log("Connected to MongoDB !"))
   .catch(() => console.log("Connection Failure !"));
 
-//Using express in app
-const app = express();
-
+const corsOptions = {
+  allowOrigins: "http://localhost:3000",
+  allowCredentials: true,
+};
 //Middlewares
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

@@ -39,7 +39,6 @@ exports.getPost = async (req, res) => {
 //Update post
 exports.updatePost = async (req, res) => {
   const { message } = req.body;
-  console.log(req.file);
   const imageUrl = req.file
     ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
     : "";

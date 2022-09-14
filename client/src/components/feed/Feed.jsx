@@ -43,7 +43,7 @@ export default function Feed() {
         });
     };
     getPosts();
-  }, [posts, user.token]);
+  }, [user.token]);
   return (
     <FeedContainer>
       <Title>Ajouter un Post :</Title>
