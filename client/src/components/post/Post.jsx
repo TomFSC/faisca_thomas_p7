@@ -56,7 +56,7 @@ const PostMessageContainer = styled.div`
   font-size: 18px;
 `;
 
-const PostText = styled.p`
+export const PostText = styled.p`
   display: flex;
   width: 90%;
   margin-left: 50px;
@@ -172,6 +172,7 @@ const Post = ({ post, setPost }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [likeError, setLikeError] = useState("");
 
   //Cancel delete
   const cancelDelete = () => {
@@ -206,17 +207,29 @@ const Post = ({ post, setPost }) => {
   }, [post.likes, user]);
 
   const handleLike = () => {
-    axios.put(
-      `${process.env.REACT_APP_API_URL}/api/posts/${post._id}/like`,
-      user.currentUser,
-      {
-        headers: {
-          authorization: user.token,
-        },
-      }
-    );
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
+    axios
+      .put(
+        `${process.env.REACT_APP_API_URL}/api/posts/${post._id}/like`,
+        user.currentUser,
+        {
+          headers: {
+            authorization: user.token,
+          },
+        }
+      )
+      .then((response) => {
+        setLike(isLiked ? like - 1 : like + 1);
+        setIsLiked(!isLiked);
+      })
+      .catch((error) => {
+        setLikeError(error.response.data);
+        setTimeout(() => {
+          // if valid
+          if (error) {
+            setLikeError("");
+          }
+        }, 2000);
+      });
   };
 
   return (
@@ -251,7 +264,7 @@ const Post = ({ post, setPost }) => {
         <PostMessageContainer key="postMessage">
           {post.message}
         </PostMessageContainer>
-
+        <ErrorMsg>{likeError}</ErrorMsg>
         <PostInfosContainer key="postInfos">
           <LikesContainer>
             <LikePost color={isLiked ? "success" : ""} onClick={handleLike} />

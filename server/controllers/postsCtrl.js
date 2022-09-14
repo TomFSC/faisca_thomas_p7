@@ -50,7 +50,7 @@ exports.updatePost = async (req, res) => {
 
   delete req.body.user_id;
   //If object in request exists
-  if (postObject !== null) {
+  if (req.file !== undefined) {
     //Get the post
     Post.findOne({ _id: req.params.id })
       .then((post) => {
@@ -60,7 +60,7 @@ exports.updatePost = async (req, res) => {
           //Update Database with new image
           Post.updateOne(
             { _id: req.params.id },
-            { ...postObject, _: req.params.id }
+            { ...postObject, _id: req.params.id }
           )
             .then(() => res.status(200).json("Post mis à jour !"))
             .catch((error) => res.status(401).json({ error }));
@@ -69,10 +69,7 @@ exports.updatePost = async (req, res) => {
       .catch((error) => res.status(404).json({ error }));
   } else {
     //If no File in request
-    Post.updateOne(
-      { _id: req.params.id },
-      { message: message, image: imageUrl }
-    )
+    Post.updateOne({ _id: req.params.id }, { message: message })
       .then(() => res.status(200).json("Post mis à jour !"))
       .catch((error) => res.status(401).json({ error }));
   }

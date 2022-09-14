@@ -12,10 +12,12 @@ import {
   FileInput,
   PostFormImgContainer,
   PostFileImg,
+  CancelImg,
   StyledHr,
   TextArea,
   Button,
 } from "../../components/postform/PostForm";
+import { PostText } from "../../components/post/Post";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { useNavigate, useParams } from "react-router-dom";
@@ -70,7 +72,7 @@ export default function PostPage() {
       setMessage(res.data.message);
     };
     getPost();
-  }, [id, user, post]);
+  }, [id, user]);
 
   //Update post
   const handleUpdate = async (e) => {
@@ -102,15 +104,27 @@ export default function PostPage() {
       <Title>Modifiez votre Post :</Title>
       <PostFormContainer onSubmit={handleUpdate}>
         {file && (
-          <PostFormImgContainer>
-            <PostFileImg src={URL.createObjectURL(file)} alt="post_image" />
-          </PostFormImgContainer>
+          <>
+            <PostText>Nouvelle image</PostText>
+            <PostFormImgContainer>
+              <PostFileImg src={URL.createObjectURL(file)} alt="post_image" />
+              <CancelImg
+                onClick={() => {
+                  setFile("");
+                  setPostFile(postFile);
+                }}
+              />
+            </PostFormImgContainer>
+          </>
         )}
         <StyledHr />
         {postFile ? (
-          <PostFormImgContainer>
-            <PostFileImg src={postFile} />
-          </PostFormImgContainer>
+          <>
+            <PostText>Ancienne image</PostText>
+            <PostFormImgContainer>
+              <PostFileImg src={postFile} />
+            </PostFormImgContainer>
+          </>
         ) : (
           ""
         )}
